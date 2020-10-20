@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>White Board</title>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A Collabrative White board">
+    <meta name="author" content="devan">
+		  <style type="text/css">
+      #container { position: relative; }
+      #container{
+        width: 1000px;
+        height: 500px;
+        background-color: #fff;
+        border-radius: 5px;
+      }
+      body{
+        background: rgb(55,55,55) !important;
+      }
+      #imageView { border: 1px solid #000; }
+      #imageTemp { position: absolute; top: 1px; left: 1px; }
+      canvas {
+        border-radius: 5px;
+        cursor: url(../img/pen.png), crosshair;
+    }
+    #text_tool {
+    position: absolute;
+    border: 1px dashed black;
+    outline: 0;
+    z-index:1000 !important;
+    display: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.container .btn.btn-sm{
+    background: #06f;
+    box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    text-shadow: 0 1px #06f;
+    display: inline-block;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin-right: 5px;
+}
+.container .btn.btn-sm:active{
+   background: #06f; 
+}
+label{
+    color: #fff;
+}
+#google {
+  font-family: 'Roboto', sans-serif;
+}
+#google1 {
+  font-family: 'Lobster', cursive;
+}
+#google2 {
+  font-family: 'Dancing Script', cursive;
+}
+#google3 {
+  font-family: 'Grandstander', cursive;
+}
+#google4 {
+  font-family: 'Ranchers', cursive;
+}
+    </style>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Grandstander:ital@1&family=Lobster&family=Ranchers&family=Roboto:wght@300&display=swap" rel="stylesheet">     
+	</head>
+    
+	<body style="margin-top:30px;">
+	<div class="container">
+    
+        <p style="">
+        <button type="button" class="btn btn-warning btn-sm" value="pencil" id="pencil-button">Pencil</button>
+        <button type="button" class="btn btn-warning btn-sm" value="rect" id="rect-button">Rectangle</button>
+        <button type="button" class="btn btn-warning btn-sm" value="circle" id="circle-button">Circle</button>
+        <button type="button" class="btn btn-warning btn-sm" value="ellipse" id="ellipse-button">Ellipse</button>
+        <button type="button" class="btn btn-warning btn-sm" value="line" id="line-button">Line</button>
+        <button type="button" class="btn btn-warning btn-sm" value="text" id="text-button">Text</button>
+        <button type="button" class="btn btn-warning btn-sm" value="erase" id="erase-button">Erase</button>
+        <button type="button" class="btn btn-success btn-sm" value="save" onclick="savePopUp()" id="download">Save</button>
+        <button type="button" class="btn btn-warning btn-sm" id="clear-all">Clear All</button>
+        <label for="colour" style="position:absolute;">Colour : </label>
+        <input id="colour-picker" value="#000000" style="width:80px;" class="jscolor {width:243, height:150, position:'right',
+        borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+        <!-- <span class="form-group" style="width: 100px;display: inline-block;">
+              <label for="draw-grid">Grid: </label>
+              <select class="form-control" id="draw-grid">
+                <option value="normal">Normal</option>
+                <option value="medium" selected>Medium</option>
+                <option value="large">Large</option>
+                <option value="nogrid">No Grid</option>
+              </select>
+        </span> -->
+        <span class="form-group" style="width: 90px;display: inline-block;">
+          <label for="line-Width">Thickness: </label>
+          <select class="form-control" id="line-Width">
+            <option>2</option>
+            <option>4</option>
+            <option>6</option>
+            <option>8</option>
+            <option>10</option>
+            <option>12</option>
+            <option>14</option>
+          </select>
+        </span>
+         <span class="form-group" style="width: 130px;display: inline-block;">
+          <label for="draw-text-font-family">Font: </label>
+          <select class="form-control" id="draw-text-font-family">
+            <option value="Verdana" selected>Verdana</option>
+            <option value="Arial" id="google">Roboto</option>
+            <option value="lobster" id="google1">Lobster</option>
+            <option value="Times New Roman" id="google2">Curly</option>
+            <option value="Courier New" id="google3">GrandStander</option>
+            <option value="serif" id="google4">Ranchers</option>
+          </select>
+        </span>
+        <span class="form-group" style="width: 90px;display: inline-block;">
+          <label for="draw-text-font-size">Font Size: </label>
+          <select class="form-control" id="draw-text-font-size">
+            <option value="16">16 Px</option>
+            <option value="18">18 Px</option>
+            <option value="20">20 Px</option>
+            <option value="22">22 Px</option>
+            <option value="24">24 Px</option>
+            <option value="26">26 Px</option>
+            <option value="28">28 Px</option>
+            <option value="30">30 Px</option>
+            <option value="32" selected>32 Px</option>
+            <option value="34">34 Px</option>
+            <option value="36">36 Px</option>
+            <option value="38">38 Px</option>
+            <option value="40">40 Px</option>
+          </select>
+        </span>
+        </p>
+
+        <div id="container">
+          <canvas id="imageView" width="1000" height="500">
+            
+          </canvas>
+        </div>
+    </div>
+    
+<!-- Script files -->
+        <script>
+          function savePopUp() {
+            alert("Saved in Database");
+          }
+        </script>
+        <script src='jquery.min.js'></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="jscolor/jscolor.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+		    <script src="canvas.js"></script> 
+		
+
+     <!-- <script type="text/javascript">
+      $(document).ready(function(){
+          var board_url = window.location.href;
+          $('.linkToBoard').attr("href",board_url);
+      });
+    </script> -->
+
+	</body>
+</html>

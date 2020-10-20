@@ -1,0 +1,25 @@
+{
+  "name": "collab",
+  "version": "1.0.0",
+  "description": "A collaborative white board",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "4.17.1",
+    "fs": "0.0.1-security",
+    "mongoose": "5.10.6",
+    "multer": "^1.4.2",
+    "socket.io": "2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "venkateshtantravahi/collab"
+  },
+  "keywords": [
+    "white-board"
+  ],
+  "author": "venkatesh",
+  "license": "ISC"
+}
